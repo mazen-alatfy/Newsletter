@@ -29,6 +29,9 @@ class PostResource extends Resource
                     ->maxLength(255)
                     ->required(),
 
+                Forms\Components\Select::make('category_id')
+                    ->relationship(name: 'category', titleAttribute: 'name'),
+
                 MarkdownEditor::make('content')
                     ->columnSpanFull()
                     ->minLength(14)
@@ -47,6 +50,11 @@ class PostResource extends Resource
 
                 Tables\Columns\TextColumn::make('author.name')
                     ->label('Author')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category')
                     ->sortable()
                     ->searchable(),
             ])
