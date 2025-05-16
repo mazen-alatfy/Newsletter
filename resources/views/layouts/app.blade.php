@@ -14,7 +14,7 @@
 
     </head>
     <body class="bg-gray-100 text-gray-900">
-        <header></header>
+        <header>Newsletter</header>
 
         <main class="container mx-auto p-4">
             @yield('content')

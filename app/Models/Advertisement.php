@@ -21,3 +21,9 @@ class Advertisement extends Model
     ];
  
 }
+
+
+
+
+
+
