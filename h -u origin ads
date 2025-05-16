@@ -1,0 +1,47 @@
+[33mcommit 50dc8f8da71b78647e6fc04b02bfd36b2fbfd334[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mads[m[33m)[m
+Author: mazen <mazen@email.com>
+Date:   Fri May 16 14:38:46 2025 +0300
+
+    first commit
+
+[33mcommit d80cbc22c3238a884cb771b5470d2d8e059136e0[m
+Author: mazen <mazen@email.com>
+Date:   Sun Apr 20 21:14:35 2025 +0200
+
+    handle ads crud
+
+[33mcommit a65d89d433eb73093e6a4cc991338b7c8c7a10ce[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 03:47:53 2025 +0200
+
+    order posts by latest
+
+[33mcommit 2c928b37c45be18cba425e4c24c6b3668d6bb0b9[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 03:44:21 2025 +0200
+
+    Add categories to posts
+
+[33mcommit 295a7de6cd6b6df8786c27c7122ed64594c106fc[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 03:44:05 2025 +0200
+
+    list posts in views
+
+[33mcommit aaf37580f7a0104133bbfd27598a6311cda83211[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 02:44:35 2025 +0200
+
+    Hancle \cagegory CRUD
+
+[33mcommit 034d8ef6e4fe3f9aae8e756301ed3b4eff6eee4c[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 02:25:56 2025 +0200
+
+    Hanmdle post CRUD
+
+[33mcommit 5b2622bbcbb3b52cb601e5102f59a1d60a30628f[m
+Author: Khaled AbdElRahim <khaled710017@gmail.com>
+Date:   Sat Apr 19 01:45:58 2025 +0200
+
+    WIP
