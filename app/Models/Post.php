@@ -20,6 +20,20 @@ class Post extends Model
         'title',
         'user_id',
         'content',
+        'image',
+        'category_id',
+        'is_trending',
+        'is_last_show',
+        'doctor_name',
+        'doctor_image',
+        'published_at',
+        'cover_image',
+    ];
+
+    protected $casts = [
+        'is_trending' => 'boolean',
+        'is_last_show' => 'boolean',
+        'published_at' => 'datetime',
     ];
 
     public function author(): BelongsTo
@@ -35,5 +49,5 @@ class Post extends Model
 {
     return $this->hasMany(Comment::class);
 }
-    
+
 }

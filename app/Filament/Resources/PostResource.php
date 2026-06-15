@@ -32,6 +32,36 @@ class PostResource extends Resource
                 Forms\Components\Select::make('category_id')
                     ->relationship(name: 'category', titleAttribute: 'name'),
 
+                Forms\Components\Toggle::make('is_trending')
+                    ->label('Trending'),
+
+                Forms\Components\Toggle::make('is_last_show')
+                    ->label('Last Show'),
+
+                Forms\Components\TextInput::make('doctor_name')
+                    ->maxLength(255)
+                    ->nullable(),
+
+                Forms\Components\FileUpload::make('doctor_image')
+                    ->image()
+                    ->directory('doctors')
+                    ->nullable(),
+
+                Forms\Components\DateTimePicker::make('published_at')
+                    ->nullable(),
+
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('posts/images')
+                    ->disk('public')
+                    ->nullable(),
+
+                Forms\Components\FileUpload::make('cover_image')
+                    ->image()
+                    ->directory('posts/covers')
+                    ->disk('public')
+                    ->nullable(),
+
                 MarkdownEditor::make('content')
                     ->columnSpanFull()
                     ->minLength(14)
@@ -57,6 +87,15 @@ class PostResource extends Resource
                     ->label('Category')
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\BadgeColumn::make('post_type')
+                    ->label('Type')
+                    ->colors([
+                        'warning' => fn ($record): bool => $record?->is_trending,
+                        'success' => fn ($record): bool => $record?->is_last_show,
+                        'gray' => fn ($record): bool => ! $record?->is_trending && ! $record?->is_last_show,
+                    ])
+                    ->getStateUsing(fn ($record): string => $record->is_trending ? 'Trending' : ($record->is_last_show ? 'Last Show' : 'Normal')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -68,9 +107,9 @@ class PostResource extends Resource
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\RestoreBulkAction::make(),
+                Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
     }
 

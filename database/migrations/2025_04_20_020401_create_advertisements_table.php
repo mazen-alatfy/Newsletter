@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('advertisements', function (Blueprint $table) {
-            $table->id();
-            $table->text('content');
-            $table->boolean('is_active');
-            $table->softDeletes();
+           $table->id();
+            $table->string('title');
+            $table->string('image')->nullable();
+            $table->string('link')->nullable();
+            $table->string('position');
+            $table->boolean('is_active')->default(true);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }
@@ -26,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('advertisements');
+
     }
 };

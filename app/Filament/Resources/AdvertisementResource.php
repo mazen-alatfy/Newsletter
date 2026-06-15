@@ -17,6 +17,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use App\Models\Category;
 
+
 class AdvertisementResource extends Resource
 {
     protected static ?string $model = Advertisement::class;
@@ -25,26 +26,95 @@ class AdvertisementResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([            
-                \Filament\Forms\Components\RichEditor::make('content')
-                   ->columnSpan(2),
+        return $form->schema([
+            Forms\Components\TextInput::make('title')
+                ->required()
+                ->maxLength(255),
 
-                Checkbox::make('is_active'),      
-            ]);
+            Forms\Components\FileUpload::make('image')
+                ->image()
+                ->directory('ads/images')
+                ->disk('public')
+                ->nullable(),
+
+            Forms\Components\FileUpload::make('video')
+                ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
+                ->directory('ads/videos')
+                ->disk('public')
+                ->nullable(),
+
+            Forms\Components\TextInput::make('link')
+                ->url()
+                ->maxLength(255),
+
+            Forms\Components\Select::make('position')
+                ->options([
+                    'sidebar' => 'Sidebar',
+                    'between_posts' => 'Between Posts',
+                    'homepage_top' => 'Homepage Top',
+                ])
+                ->required(),
+
+            Forms\Components\Select::make('placement')
+                ->options([
+                    'bottom' => 'Bottom',
+                    'sidebar' => 'Sidebar',
+                ])
+                ->required(),
+
+            Forms\Components\Select::make('orientation')
+                ->options([
+                    'landscape' => 'Landscape',
+                    'portrait' => 'Portrait',
+                ])
+                ->default('landscape'),
+
+            Forms\Components\Toggle::make('is_active')
+                ->default(true),
+
+            Forms\Components\DatePicker::make('start_date'),
+
+            Forms\Components\DatePicker::make('end_date'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('content')
-                   ->sortable()
-                   ->searchable()
-                   ->limit(50),
-
-                Tables\Columns\CheckboxColumn::make('is_active')
-                   ->sortable(),
+                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+                Tables\Columns\ImageColumn::make('image')->disk('public'),
+                Tables\Columns\TextColumn::make('link')
+                    ->url(fn ($record) => $record->link)
+                    ->openUrlInNewTab()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('position')->searchable(),
+                Tables\Columns\TextColumn::make('placement')
+                    ->badge()
+                    ->color(fn (string $state): string => match($state) {
+                        'sidebar' => 'success',
+                        'bottom' => 'warning',
+                        default => 'gray',
+                    })
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('orientation')
+                    ->badge()
+                    ->color(fn (string $state): string => match($state) {
+                        'portrait' => 'danger',
+                        'landscape' => 'success',
+                        default => 'gray',
+                    }),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean()
+                    ->label('Active')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end_date')->date()->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
